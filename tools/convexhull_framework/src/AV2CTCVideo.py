@@ -24,8 +24,8 @@ def _load_ctc_version():
     if os.path.exists(config_file):
         with open(config_file, 'r') as f:
             config = yaml.safe_load(f)
-        return config.get('ctc_version', '8.0')
-    return '8.0'
+        return config.get('ctc_version', '9.0')
+    return '9.0'
 
 CTC_VERSION = _load_ctc_version()
 
@@ -49,7 +49,7 @@ Y4M_CLIPs = {
             "Tango_3840x2160_5994fps_10bit_420.y4m",
             "TimeLapse_3840x2160_5994fps_10bit_420.y4m",
         ]
-        if (CTC_VERSION in ["4.0", "5.0", "6.0", "7.0", "8.0"])
+        if (CTC_VERSION in ["4.0", "5.0", "6.0", "7.0", "8.0", "9.0"])
         else [
             "BoxingPractice_3840x2160_5994fps_10bit_420.y4m",
             "Crosswalk_3840x2160_5994fps_10bit_420.y4m",
@@ -83,7 +83,7 @@ Y4M_CLIPs = {
             "Vertical_bees_1080x1920_2997.y4m",
             "WorldCup_1920x1080_30p.y4m",
         ]
-        if (CTC_VERSION in ["5.0", "6.0", "7.0", "8.0"])
+        if (CTC_VERSION in ["5.0", "6.0", "7.0", "8.0", "9.0"])
         else [
             "Aerial3200_1920x1080_5994_10bit_420.y4m",
             "Boat_1920x1080_5994_10bit_420.y4m",
@@ -128,7 +128,7 @@ Y4M_CLIPs = {
             "Stockholm_640x360_5994.y4m",
             "TouchdownPass_640x360_2997.y4m",
         ]
-        if (CTC_VERSION in ["4.0", "5.0", "6.0", "7.0", "8.0"])
+        if (CTC_VERSION in ["4.0", "5.0", "6.0", "7.0", "8.0", "9.0"])
         else [
             "BlueSky_360p25.y4m",
             "RedKayak_360_2997.y4m",
@@ -157,7 +157,7 @@ Y4M_CLIPs = {
             "STARCRAFT_1080p60.y4m",
             "WITCHER3_1920x1080_60_8bit_420.y4m",
         ]
-        if (CTC_VERSION in ["4.0", "5.0", "6.0", "7.0", "8.0"])
+        if (CTC_VERSION in ["4.0", "5.0", "6.0", "7.0", "8.0", "9.0"])
         else (
             [
                 "CosmosTreeTrunk_sdr_2048x858_25_8bit.y4m",
@@ -217,7 +217,7 @@ Y4M_CLIPs = {
             "Spreadsheet_1920x1080_30fps_8bit_420_130f.y4m",
             "Wikipedia_1920x1080p30.y4m",
         ]
-        if (CTC_VERSION in ["5.0", "6.0", "7.0", "8.0"])
+        if (CTC_VERSION in ["5.0", "6.0", "7.0", "8.0", "9.0"])
         else [
             "BigBuckBunnyStudio1_1920x1080_60fps_10bit_420_020_0149.y4m",
             "Debugging_1920x1080_30fps_8bit_420.y4m",
@@ -327,7 +327,7 @@ Y4M_CLIPs = {
             "WalkingInStreet_1920x1080_30fps.y4m",
             "WorldCup_far_1920x1080_30p.y4m",
         ]
-        if (CTC_VERSION in ["5.0", "6.0", "7.0", "8.0"])
+        if (CTC_VERSION in ["5.0", "6.0", "7.0", "8.0", "9.0"])
         else [
             "Artistic_Concert_1920x1080_25fps.y4m",
             "Artistic_Intro_1920x1080_2997fps.y4m",
@@ -449,7 +449,7 @@ AS_Downscaled_Clips = {
             "/A1_4k_540p/PierSeaSide_960x540_2997fps_10bit_420_v2.y4m",
             "/A1_4k_360p/PierSeaSide_640x360_2997fps_10bit_420_v2.y4m",
         ]
-        if (CTC_VERSION in ["4.0", "5.0", "6.0", "7.0", "8.0"])
+        if (CTC_VERSION in ["4.0", "5.0", "6.0", "7.0", "8.0", "9.0"])
         else [
             "/A1_4k_1440p/PierSeaSide_2560x1440_2997fps_10bit_420.y4m",
             "/A1_4k_1080p/PierSeaSide_1920x1080_2997fps_10bit_420.y4m",

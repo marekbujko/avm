@@ -6,8 +6,8 @@
 # CTC Version
 # =============================================================================
 # CTC version determines test sequences, encoder parameters, and template files.
-# Valid versions: "2.0", "3.0", "4.0", "5.0", "6.0", "7.0", "8.0"
-ctc_version: "8.0"
+# Valid versions: "2.0", "3.0", "4.0", "5.0", "6.0", "7.0", "8.0", "9.0"
+ctc_version: "9.0"
 
 # =============================================================================
 # Path Configuration
@@ -31,8 +31,8 @@ executables:
   # FFmpeg for various video operations
   ffmpeg: "ffmpeg"
   # AVM encoder and decoder
-  aomenc: "avmenc-v12.0.0"
-  aomdec: "avmdec-v12.0.0"
+  aomenc: "avmenc-v14.0.0"
+  aomdec: "avmdec-v14.0.0"
   # SVT-AV1 encoder
   svtav1: "SvtAv1EncApp"
   # AV1 encoder and decoder

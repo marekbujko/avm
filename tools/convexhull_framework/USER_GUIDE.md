@@ -1,6 +1,6 @@
 # AVM CTC Testing Framework - User Guide
 
-This guide provides instructions for running AV2 Common Test Conditions (CTC) (https://aomedia.org/docs/CWG-F384o_AV2_CTC_v8.pdf) tests using the AVM CTC testing framework.
+This guide provides instructions for running AV2 Common Test Conditions (CTC) (https://aomedia.org/docs/CWG-G082o_AV2_CTC_v9.pdf) tests using the AVM CTC testing framework.
 
 ## Table of Contents
 
@@ -79,7 +79,7 @@ The following files are required in the `./bin` directory:
 AV2 CTC uses VMAF tool as the reference implementation for all quality metrics. Use the versioned flag for CTC compliance:
 
 ```bash
-vmaf --avm_ctc v6.0 ...
+vmaf --avm_ctc v7.0 ...
 ```
 
 This generates all quality metrics required for AV2 CTC.
@@ -280,14 +280,15 @@ The CTC version is a critical parameter that determines which test sequences, en
 
 ```yaml
 # CTC version determines test sequences, encoder parameters, and template files.
-# Valid versions: "2.0", "3.0", "4.0", "5.0", "6.0", "7.0", "8.0"
-ctc_version: "8.0"
+# Valid versions: "2.0", "3.0", "4.0", "5.0", "6.0", "7.0", "8.0", "9.0"
+ctc_version: "9.0"
 ```
 
 | CTC Version | Description |
 |-------------|-------------|
-| 8.0 | Current default - Latest AV2 CTC specification |
-| 7.0 | Previous AV2 CTC version |
+| 9.0 | Current default - Latest AV2 CTC specification (uses VMAF `--aom_ctc v7.0`) |
+| 8.0 | Previous AV2 CTC version (uses VMAF `--aom_ctc v6.0`) |
+| 7.0 | Earlier AV2 CTC version |
 | 6.0 | AV2 CTC with updated VMAF parameters |
 | 5.0 | AV2 CTC with expanded test set |
 | 4.0 | Earlier AV2 CTC version |
@@ -381,7 +382,7 @@ encoding:
 
 The framework uses different QP values for each test configuration. These are defined in `config.yaml`:
 
-**AV1/AV2 QP Values (CTC versions 2.0-8.0):**
+**AV1/AV2 QP Values (CTC versions 2.0-9.0):**
 
 | Configuration | QP Values |
 |---------------|-----------|
@@ -675,7 +676,7 @@ The `-t` parameter specifies which tool to use for video downscaling and upscali
 
 ## ECF (Extended Chroma Format) Testing
 
-The framework supports Extended Chroma Format (ECF) testing as defined in CTC v8.0 Section 6. ECF tests evaluate codec performance on non-4:2:0 content including 4:4:4, 4:2:2, HDR, YCoCg, and Screen Content sequences.
+The framework supports Extended Chroma Format (ECF) testing as defined in CTC v8.0+ Section 6. ECF tests evaluate codec performance on non-4:2:0 content including 4:4:4, 4:2:2, HDR, YCoCg, and Screen Content sequences.
 
 ### ECF Content Classes
 
@@ -732,7 +733,7 @@ ecf:
 
 ### ECF Tiling and Threading Rules
 
-ECF uses resolution-based tiling rules (CTC v8.0 Section 6.2), different from the class-based rules in regular CTC:
+ECF uses resolution-based tiling rules (CTC v8.0+ Section 6.2), different from the class-based rules in regular CTC:
 
 **RA configuration:**
 

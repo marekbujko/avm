@@ -50,7 +50,7 @@ _config = load_config()
 ######################################
 # CTC Version (loaded from config.yaml)
 ######################################
-CTC_VERSION = _config.get("ctc_version", "8.0")
+CTC_VERSION = _config.get("ctc_version", "9.0")
 
 ######################################
 # Path configuration
@@ -81,10 +81,13 @@ ECF_TEST_CONFIGURATIONS = _ecf_config.get("configurations", ["AI", "RA", "LD"])
 ECF_DATASET = _ecf_config.get("dataset", "ECF_TEST_SET")
 ECF_GOP_SIZE = _ecf_config.get("gop_size", 33)
 ECF_FrameNum = _ecf_config.get("frame_counts", {"AI": 5, "RA": 66, "LD": 33})
-ECF_PSNR_YUV_Weights = _ecf_config.get("psnr_yuv_weights", {
-    "444": {"psnr_y_weight": 4.0, "psnr_u_weight": 1.0, "psnr_v_weight": 1.0},
-    "422": {"psnr_y_weight": 8.0, "psnr_u_weight": 1.0, "psnr_v_weight": 1.0},
-})
+ECF_PSNR_YUV_Weights = _ecf_config.get(
+    "psnr_yuv_weights",
+    {
+        "444": {"psnr_y_weight": 4.0, "psnr_u_weight": 1.0, "psnr_v_weight": 1.0},
+        "422": {"psnr_y_weight": 8.0, "psnr_u_weight": 1.0, "psnr_v_weight": 1.0},
+    },
+)
 ECF_Template = _ecf_config.get("template", "")
 
 ######################################
@@ -136,7 +139,7 @@ APSNR_V_WEIGHT = _config["quality"]["apsnr_v_weight"]
 ######################################
 # CTC template files (derived from CTC_VERSION)
 ######################################
-if CTC_VERSION in ["5.0", "6.0", "7.0", "8.0"]:
+if CTC_VERSION in ["5.0", "6.0", "7.0", "8.0", "9.0"]:
     CTC_RegularXLSTemplate = os.path.join(BinPath, "AVM_CWG_Regular_CTCv5_v7.4.5.xlsm")
     CTC_ASXLSTemplate = os.path.join(BinPath, "AVM_CWG_AS_CTC_v10.0.xlsm")
 elif CTC_VERSION == "4.0":
@@ -191,7 +194,7 @@ if EnableSubjectiveTest:
     QPs = {
         "RA": _config["subjective_qps"]["RA"],
     }
-elif CTC_VERSION in ["2.0", "3.0", "4.0", "5.0", "6.0", "7.0", "8.0"]:
+elif CTC_VERSION in ["2.0", "3.0", "4.0", "5.0", "6.0", "7.0", "8.0", "9.0"]:
     QPs = _config["encoding"]["qps"]
 else:
     # Legacy QP values for older CTC versions
@@ -243,7 +246,7 @@ if EnableSubjectiveTest:
     FrameNum = {"RA": _config["subjective_frame_counts"]}
 elif EnableECF:
     FrameNum = ECF_FrameNum
-elif (CTC_VERSION in ["7.0", "8.0"]) and (EnableVerificationTestConfig == False):
+elif (CTC_VERSION in ["7.0", "8.0", "9.0"]) and (EnableVerificationTestConfig == False):
     FrameNum = _config["frame_counts_non_verification"]
 else:
     FrameNum = _config["frame_counts"]

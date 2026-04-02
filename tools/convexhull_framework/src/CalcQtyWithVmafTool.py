@@ -175,7 +175,9 @@ def VMAF_CalQualityMetrics(
 
     args = " -r %s -d %s -q --threads 4 -o %s" % (origfile, recfile, vmaf_log)
 
-    if CTC_VERSION in ["6.0", "7.0", "8.0"]:
+    if CTC_VERSION in ["9.0"]:
+        args += " --aom_ctc v7.0"
+    elif CTC_VERSION in ["6.0", "7.0", "8.0"]:
         args += " --aom_ctc v6.0"
     elif CTC_VERSION in ["3.0", "4.0", "5.0"]:
         args += " --aom_ctc v3.0"

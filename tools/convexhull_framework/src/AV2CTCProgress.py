@@ -9,6 +9,7 @@
 ## can obtain it at aomedia.org/license/patent-license/.
 ##
 from platform import release
+
 __author__ = "maggie.sun@intel.com, ryanlei@meta.com"
 
 import csv
@@ -28,7 +29,6 @@ from Config import (
     CTC_ASXLSTemplate,
     CTC_ECFXLSTemplate,
     CTC_RegularXLSTemplate,
-    DnScaleRatio,
     EnableECF,
     InterpolatePieces,
     QPs,
@@ -211,6 +211,7 @@ formats = {
 # key is the release
 dates = {
     "v01.0.0": "01/16/2021",
+    "v01.0.0-scale": "01/16/2021",
     "v02.0.0": "08/27/2021",
     "v03.0.0": "05/27/2022",
     "v04.0.0": "04/04/2023",
@@ -307,22 +308,24 @@ def WriteSheet(csv_file, sht, start_row):
 
 
 def get_anchor_tag(tag):
-    if tag in ["v13.0.0"]:
-        anchor_tag = "v01.0.0-scale"
-    elif tag == "v01.0.0-scale":
+    if tag in ["v01.0.0-scale"]:
         anchor_tag = "None"
+    elif tag in ["v13.0.0"]:
+        anchor_tag = "v01.0.0-scale"
     else:
         anchor_tag = "v01.0.0"
     return anchor_tag
+
 
 def FillXlsFile(csv_files):
     for tag in csv_files.keys():
         if tag in ["v01.0.0", "v01.0.0-scale"]:
             continue
         else:
+            release = csv_files[tag]["release"]
             anchor = get_anchor_tag(tag)
             anchor_release = csv_files[anchor]["release"]
-            release = csv_files[tag]["release"]
+
             print("Processing %s..." % release)
             for cfg in csv_files[anchor]["config"].keys():
                 if cfg not in CONFIG:
@@ -715,9 +718,11 @@ def write_bdrate(bdrate, bdrate_csv):
         fc = csv.DictWriter(
             csvfile,
             fieldnames=bdrate[0].keys(),
+            lineterminator="\n",
         )
         fc.writeheader()
-        fc.writerows(bdrate)
+        for row in bdrate:
+            fc.writerow({k: v.strip() if isinstance(v, str) else v for k, v in row.items()})
 
 
 def write_avg_bdrate(
@@ -1084,7 +1089,9 @@ if __name__ == "__main__":
             if test_cfg not in CONFIG:
                 continue
             IgnorePerf = test_cfg in ["RA", "AS"]
-            records[tag]["config"][test_cfg] = ParseCSVFile(csv_files[tag]["config"][test_cfg], IgnorePerf)
+            records[tag]["config"][test_cfg] = ParseCSVFile(
+                csv_files[tag]["config"][test_cfg], IgnorePerf
+            )
             records[tag]["release"] = csv_files[tag]["release"]
 
     FillXlsFile(csv_files)

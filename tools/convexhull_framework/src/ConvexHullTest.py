@@ -8,6 +8,7 @@
 ## License 1.0 was not distributed with this source code in the PATENTS file, you
 ## can obtain it at aomedia.org/license/patent-license/.
 ##
+
 __author__ = "maggie.sun@intel.com, ryanlei@meta.com"
 
 import argparse
@@ -489,13 +490,9 @@ def SaveConvexHullResults(
                     missing.write("\n%s quality metrics is missing" % bs)
                     continue
 
+                filesize = os.path.getsize(bs)
                 bitrate = round(
-                    (
-                        os.path.getsize(bs)
-                        * 8
-                        * (clip.fps_num / clip.fps_denom)
-                        / frame_num
-                    )
+                    (filesize * 8 * (clip.fps_num / clip.fps_denom) / frame_num)
                     / 1000.0,
                     6,
                 )

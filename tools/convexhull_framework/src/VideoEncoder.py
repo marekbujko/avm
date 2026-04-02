@@ -64,10 +64,10 @@ def EncodeWithAOM_AV2(
     )
 
     # config encoding bitdepth
-    if EnableECF and CTC_VERSION in ["8.0"]:
+    if EnableECF and CTC_VERSION in ["8.0", "9.0"]:
         # ECF: always encode at 10-bit (Section 6.2)
         args += " --input-bit-depth=%d --bit-depth=10" % (clip.bit_depth)
-    elif (CTC_VERSION in ["6.0", "7.0", "8.0"]) and (
+    elif (CTC_VERSION in ["6.0", "7.0", "8.0", "9.0"]) and (
         clip.file_class in ["A2", "A4", "B1"]
     ):
         # CWG-D088
@@ -78,13 +78,13 @@ def EncodeWithAOM_AV2(
             clip.bit_depth,
         )
 
-    if CTC_VERSION in ["2.0", "3.0", "4.0", "5.0", "6.0", "7.0", "8.0"]:
+    if CTC_VERSION in ["2.0", "3.0", "4.0", "5.0", "6.0", "7.0", "8.0", "9.0"]:
         args += " --qp=%d" % QP
     else:
         args += " --use-16bit-internal --cq-level=%d" % QP
 
     # Tile and threading configuration
-    if EnableECF and CTC_VERSION in ["8.0"]:
+    if EnableECF and CTC_VERSION in ["8.0", "9.0"]:
         # ECF tiling rules (Section 6.2)
         if test_cfg == "RA":
             if clip.width >= 3840 and clip.height >= 2160:
@@ -130,7 +130,7 @@ def EncodeWithAOM_AV2(
         and (test_cfg == "RA")
     ):
         args += " --tile-rows=1 --tile-columns=1 --threads=4 --row-mt=0 "
-    elif CTC_VERSION in ["7.0", "8.0"]:
+    elif CTC_VERSION in ["7.0", "8.0", "9.0"]:
         if EnableVerificationTestConfig:
             args += " --tile-rows=0 --tile-columns=0 --threads=1 --row-mt=0 "
         elif test_cfg == "RA":
@@ -187,10 +187,10 @@ def EncodeWithAOM_AV2(
         args += " --enable-keyframe-filtering=0 "
 
     # Content-specific flags
-    if EnableECF and CTC_VERSION in ["8.0"] and clip.file_class == "ECF-6":
+    if EnableECF and CTC_VERSION in ["8.0", "9.0"] and clip.file_class == "ECF-6":
         # ECF-6: screen content coding (Section 6.3)
         args += " --tune-content=screen --enable-intrabc-ext=1 --enable-extended-sdp=0"
-    elif CTC_VERSION in ["8.0"]:
+    elif CTC_VERSION in ["8.0", "9.0"]:
         # CWG-D082, CWG-F222
         if clip.file_class in ["B2"]:
             args += " --tune-content=screen --enable-intrabc-ext=1"
@@ -237,13 +237,13 @@ def EncodeWithAOM_AV2(
         print("Unsupported Test Configuration %s" % test_cfg)
 
     # HDR encoding flags
-    if EnableECF and CTC_VERSION in ["8.0"] and clip.file_class in ["ECF-3", "ECF-4"]:
+    if EnableECF and CTC_VERSION in ["8.0", "9.0"] and clip.file_class in ["ECF-3", "ECF-4"]:
         # ECF HDR classes (Section 6.1.3, 6.1.4)
         args += " --color-primaries=bt2020 --transfer-characteristics=smpte2084 --matrix-coefficients=bt2020ncl"
         args += " --chroma-sample-position=topleft "
     elif clip.file_class == "G1" or clip.file_class == "G2":
         args += " --color-primaries=bt2020 --transfer-characteristics=smpte2084 --matrix-coefficients=bt2020ncl"
-        if CTC_VERSION in ["8.0"]:
+        if CTC_VERSION in ["8.0", "9.0"]:
             args += " --chroma-sample-position=topleft "
         else:
             args += " --chroma-sample-position=colocated "
@@ -294,7 +294,7 @@ def EncodeWithAOM_AV1_Unconstrained(
     )
 
     # config enoding bitdepth
-    if (CTC_VERSION in ["6.0", "7.0", "8.0"]) and (
+    if (CTC_VERSION in ["6.0", "7.0", "8.0", "9.0"]) and (
         clip.file_class in ["A2", "A4", "B1"]
     ):
         # CWG-D088
@@ -325,7 +325,7 @@ def EncodeWithAOM_AV1_Unconstrained(
         and (test_cfg == "RA")
     ):
         args += " --tile-rows=1 --tile-columns=1 --threads=4 --row-mt=0 "
-    elif CTC_VERSION in ["7.0", "8.0"]:
+    elif CTC_VERSION in ["7.0", "8.0", "9.0"]:
         if EnableVerificationTestConfig:
             args += " --tile-rows=0 --tile-columns=0 --threads=0 --row-mt=0  "
             args += " --drop-frame=0 --static-thresh=0 --minsection-pct=0 --maxsection-pct=200 --arnr-maxframes=7 --arnr-strength=5 --sharpness=0 "
@@ -466,7 +466,7 @@ def EncodeWithAOM_AV1_Constrained(
     )
 
     # config enoding bitdepth
-    if (CTC_VERSION in ["6.0", "7.0", "8.0"]) and (
+    if (CTC_VERSION in ["6.0", "7.0", "8.0", "9.0"]) and (
         clip.file_class in ["A2", "A4", "B1"]
     ):
         # CWG-D088
@@ -497,7 +497,7 @@ def EncodeWithAOM_AV1_Constrained(
         and (test_cfg == "RA")
     ):
         args += " --tile-rows=1 --tile-columns=1 --threads=4 --row-mt=0 "
-    elif CTC_VERSION in ["7.0", "8.0"]:
+    elif CTC_VERSION in ["7.0", "8.0", "9.0"]:
         if EnableVerificationTestConfig:
             args += " --tile-rows=0 --tile-columns=0 --threads=1 --row-mt=0 "
         elif test_cfg == "RA":
