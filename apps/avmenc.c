@@ -275,9 +275,7 @@ const arg_def_t *global_args[] = {
   &g_av2_codec_arg_defs.enable_ops,
   &g_av2_codec_arg_defs.num_ops,
   &g_av2_codec_arg_defs.enable_atlas,
-
   &g_av2_codec_arg_defs.icc_file,
-
   NULL
 };
 
