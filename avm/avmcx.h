@@ -368,7 +368,7 @@ enum avme_enc_control_id {
    */
   AV2E_SET_FRAME_PARALLEL_DECODING = 37,
 
-  /*!\brief Codec control function to enable s_frame_mode, int parameter
+  /*!\brief Codec control function to enable sframe, int parameter
    *
    * AV2 has a bitstream feature to designate certain frames as S-frames,
    * from where we can switch to a different stream,
@@ -377,7 +377,7 @@ enum avme_enc_control_id {
    * - 0 = disable (default)
    * - 1 = enable
    */
-  AV2E_SET_S_FRAME_MODE = 39,
+  AV2E_SET_ENABLE_SFRAME = 39,
 
   /*!\brief Codec control function to set adaptive quantization mode, unsigned
    * int parameter
@@ -1598,8 +1598,8 @@ AVM_CTRL_USE_TYPE(AV2E_SET_FRAME_PARALLEL_DECODING, unsigned int)
 AVM_CTRL_USE_TYPE(AV2E_SET_ENABLE_CDF_AVERAGING, int)
 #define AVM_CTRL_AV2E_SET_ENABLE_CDF_AVERAGING
 
-AVM_CTRL_USE_TYPE(AV2E_SET_S_FRAME_MODE, int)
-#define AVM_CTRL_AV2E_SET_S_FRAME_MODE
+AVM_CTRL_USE_TYPE(AV2E_SET_ENABLE_SFRAME, int)
+#define AVM_CTRL_AV2E_SET_ENABLE_SFRAME
 
 AVM_CTRL_USE_TYPE(AV2E_SET_AQ_MODE, unsigned int)
 #define AVM_CTRL_AV2E_SET_AQ_MODE

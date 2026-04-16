@@ -109,7 +109,7 @@ struct av2_extracfg {
   int render_width;
   int render_height;
   avm_superblock_size_t superblock_size;
-  int s_frame_mode;
+  int enable_sframe;
 
   int film_grain_test_vector;
   const char *film_grain_table_filename;
@@ -443,7 +443,7 @@ static struct av2_extracfg default_extra_cfg = {
   0,                            // render width
   0,                            // render height
   AVM_SUPERBLOCK_SIZE_DYNAMIC,  // superblock_size
-  0,                            // s_frame_mode off by default.
+  0,                            // enable_sframe off by default.
   0,                            // film_grain_test_vector
   0,                            // film_grain_table_filename
   0,                            // film_grain_block_size
@@ -1522,7 +1522,7 @@ static avm_codec_err_t set_encoder_config(AV2EncoderConfig *oxcf,
   kf_cfg->sframe_dist = cfg->sframe_dist;
   kf_cfg->sframe_mode = cfg->sframe_mode;
   kf_cfg->sframe_type = cfg->sframe_type;
-  kf_cfg->enable_sframe = extra_cfg->s_frame_mode;
+  kf_cfg->enable_sframe = extra_cfg->enable_sframe;
 
   kf_cfg->enable_keyframe_filtering = extra_cfg->enable_keyframe_filtering;
 
@@ -2437,10 +2437,10 @@ static avm_codec_err_t ctrl_set_enable_cdf_averaging(avm_codec_alg_priv_t *ctx,
   return update_extra_cfg(ctx, &extra_cfg);
 }
 
-static avm_codec_err_t ctrl_set_s_frame_mode(avm_codec_alg_priv_t *ctx,
-                                             va_list args) {
+static avm_codec_err_t ctrl_set_enable_sframe(avm_codec_alg_priv_t *ctx,
+                                              va_list args) {
   struct av2_extracfg extra_cfg = ctx->extra_cfg;
-  extra_cfg.s_frame_mode = CAST(AV2E_SET_S_FRAME_MODE, args);
+  extra_cfg.enable_sframe = CAST(AV2E_SET_ENABLE_SFRAME, args);
   return update_extra_cfg(ctx, &extra_cfg);
 }
 
@@ -4081,7 +4081,7 @@ static avm_codec_err_t encoder_set_option(avm_codec_alg_priv_t *ctx,
     extra_cfg.superblock_size = avm_arg_parse_enum_helper(&arg, err_string);
   } else if (avm_arg_match_helper(&arg, &g_av2_codec_arg_defs.sframe_mode, argv,
                                   err_string)) {
-    extra_cfg.s_frame_mode = avm_arg_parse_int_helper(&arg, err_string);
+    extra_cfg.enable_sframe = avm_arg_parse_int_helper(&arg, err_string);
   } else if (avm_arg_match_helper(&arg, &g_av2_codec_arg_defs.film_grain_test,
                                   argv, err_string)) {
     extra_cfg.film_grain_test_vector =
@@ -4625,7 +4625,7 @@ static avm_codec_ctrl_fn_map_t encoder_ctrl_maps[] = {
   { AV2E_SET_TIMING_INFO_TYPE, ctrl_set_timing_info_type },
   { AV2E_SET_FRAME_PARALLEL_DECODING, ctrl_set_frame_parallel_decoding_mode },
   { AV2E_SET_ENABLE_CDF_AVERAGING, ctrl_set_enable_cdf_averaging },
-  { AV2E_SET_S_FRAME_MODE, ctrl_set_s_frame_mode },
+  { AV2E_SET_ENABLE_SFRAME, ctrl_set_enable_sframe },
   { AV2E_SET_ENABLE_RECT_PARTITIONS, ctrl_set_enable_rect_partitions },
   { AV2E_SET_ENABLE_1TO4_PARTITIONS, ctrl_set_enable_uneven_4way_partitions },
   { AV2E_SET_MIN_PARTITION_SIZE, ctrl_set_min_partition_size },

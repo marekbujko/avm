@@ -1039,7 +1039,7 @@ typedef struct avm_codec_enc_cfg {
    *
    * This value must be set to 0 to 2, and tells the encoder how to insert
    * S-Frames. It will only have an effect if sframe_dist != 0.
-   * If s_frame_mode == 0,
+   * If enable_sframe == 0,
    * and lag-in-frames is not 0, only the frames in the lowest pyramid level is
    * set as S-Frame regardless of th sframe_dist
    *

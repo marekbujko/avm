@@ -236,9 +236,9 @@ class MultiLayerTest : public ::libavm_test::CodecTestWithParam<int>,
       if (layer_frame_cnt_ ==
               (start_decoding_tl1_ - 1) * num_embedded_layers_ &&
           temporal_layer_id_ == 0) {
-        encoder->Control(AV2E_SET_S_FRAME_MODE, 1);
+        encoder->Control(AV2E_SET_ENABLE_SFRAME, 1);
       } else {
-        encoder->Control(AV2E_SET_S_FRAME_MODE, 0);
+        encoder->Control(AV2E_SET_ENABLE_SFRAME, 0);
       }
     }
     layer_frame_cnt_++;
