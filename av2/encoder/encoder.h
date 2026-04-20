@@ -703,6 +703,8 @@ typedef struct {
   int force_deferred_frames_for_ras_test;
   // Signal one sequence header for the entire sequence.
   uint8_t single_seq_header_for_all_test;
+  // Insert an s frame for unit test purpose.
+  int insert_sframe;
 } UnitTestCfg;
 
 typedef struct {

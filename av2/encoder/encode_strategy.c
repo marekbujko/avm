@@ -503,7 +503,7 @@ static struct lookahead_entry *choose_frame_source(
       // When S-frames prevent show_existing_frame for overlays, the hidden
       // altref must not be implicitly output to avoid duplicate frames.
       if (cm->implicit_output_picture &&
-          (cpi->oxcf.kf_cfg.enable_sframe ||
+          (cm->current_frame.frame_type == S_FRAME ||
            cpi->oxcf.tool_cfg.g_error_resilient_mode)) {
         cm->implicit_output_picture = 0;
       }
@@ -525,15 +525,15 @@ static int allow_show_existing(const AV2_COMP *const cpi,
     // When lookahead is exhausted, still disallow show_existing_frame if
     // S-frames are enabled or global error resilient mode is on, since
     // S-frames reset reference frame buffers.
-    if (cpi->oxcf.kf_cfg.enable_sframe ||
+    if (cpi->common.current_frame.frame_type == S_FRAME ||
         cpi->oxcf.tool_cfg.g_error_resilient_mode)
       return 0;
     return 1;
   }
 
-  const int is_s_frame = cpi->oxcf.kf_cfg.enable_sframe ||
-                         cpi->oxcf.tool_cfg.g_error_resilient_mode ||
-                         (lookahead_src->flags & AVM_EFLAG_SET_S_FRAME);
+  const int is_s_frame = cpi->oxcf.tool_cfg.g_error_resilient_mode ||
+                         (cpi->oxcf.kf_cfg.enable_sframe &&
+                          (lookahead_src->flags & AVM_EFLAG_SET_S_FRAME));
   const int is_key_frame =
       (cpi->rc.frames_to_key == 0) || (frame_flags & FRAMEFLAGS_KEY);
   return !is_s_frame || is_key_frame;
@@ -1274,7 +1274,7 @@ int av2_encode_strategy(AV2_COMP *const cpi, size_t *const size,
     set_ext_overrides(cm, &frame_params, ext_flags);
 
   cm->restricted_prediction_switch =
-      cpi->oxcf.kf_cfg.sframe_dist != 0 && cpi->oxcf.kf_cfg.sframe_mode == 0;
+      cpi->oxcf.kf_cfg.enable_sframe && cpi->oxcf.kf_cfg.sframe_mode == 0;
 
   av2_configure_buffer_updates(cpi, frame_update_type);
 
@@ -1308,7 +1308,7 @@ int av2_encode_strategy(AV2_COMP *const cpi, size_t *const size,
       const RefCntBuffer *const buf = cm->ref_frame_map[frame];
       if (buf == NULL) continue;
       const int frame_order =
-          (cpi->oxcf.kf_cfg.sframe_dist != 0 &&
+          (cpi->oxcf.kf_cfg.enable_sframe &&
            is_mlayer_transitively_dependent(&cm->seq_params, buf->mlayer_id,
                                             cm->mlayer_id))
               ? (int)buf->display_order_hint_restricted
@@ -1481,7 +1481,7 @@ int av2_encode_strategy(AV2_COMP *const cpi, size_t *const size,
       const RefCntBuffer *const buf = cm->ref_frame_map[frame];
       if (buf == NULL) continue;
       const int frame_order =
-          (cpi->oxcf.kf_cfg.sframe_dist != 0 &&
+          (cpi->oxcf.kf_cfg.enable_sframe &&
            is_mlayer_transitively_dependent(&cm->seq_params, buf->mlayer_id,
                                             cm->mlayer_id))
               ? (int)buf->display_order_hint_restricted

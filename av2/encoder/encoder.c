@@ -5048,7 +5048,7 @@ int av2_encode(AV2_COMP *const cpi, uint8_t *const dest,
   current_frame->tlayer_id = cm->tlayer_id;
   current_frame->mlayer_id = cm->mlayer_id;
   cm->restricted_prediction_switch =
-      cpi->oxcf.kf_cfg.sframe_dist != 0 && cpi->oxcf.kf_cfg.sframe_mode == 0;
+      cpi->oxcf.kf_cfg.enable_sframe && cpi->oxcf.kf_cfg.sframe_mode == 0;
   if (current_frame->frame_type == KEY_FRAME) {
     for (int i = 0; i < cm->seq_params.ref_frames; i++) {
       if (cm->ref_frame_map[i] != NULL)
@@ -5608,8 +5608,9 @@ void av2_apply_encoding_flags(AV2_COMP *cpi, avm_enc_frame_flags_t flags) {
 
   ext_flags->use_ref_frame_mvs = cpi->oxcf.tool_cfg.enable_ref_frame_mvs &
                                  ((flags & AVM_EFLAG_NO_REF_FRAME_MVS) == 0);
-  ext_flags->use_s_frame =
-      cpi->oxcf.kf_cfg.enable_sframe | ((flags & AVM_EFLAG_SET_S_FRAME) != 0);
+  ext_flags->use_s_frame = cpi->oxcf.kf_cfg.enable_sframe &&
+                           (((flags & AVM_EFLAG_SET_S_FRAME) != 0) ||
+                            cpi->oxcf.unit_test_cfg.insert_sframe);
   ext_flags->use_primary_ref_none =
       (flags & AVM_EFLAG_SET_PRIMARY_REF_NONE) != 0;
 }

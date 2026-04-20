@@ -52,6 +52,7 @@ class OutputOrderTest : public ::libavm_test::CodecTestWithParam<int>,
     cfg_.kf_min_dist = 65;
     cfg_.kf_max_dist = 65;
     cfg_.use_fixed_qp_offsets = 1;
+    cfg_.enable_sframe = 1;
     cfg_.sframe_dist = 4;
     cfg_.sframe_mode = 0;
     cfg_.sframe_type = 1;

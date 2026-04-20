@@ -45,8 +45,9 @@ class SFramePresenceTest
     cfg_.kf_max_dist = 9999;
     cfg_.g_lag_in_frames = 19;
     cfg_.sframe_dist = 2;
+    cfg_.enable_sframe = 1;
     if (enable_altref_) cfg_.sframe_mode = 2;
-    // Uncomment to print per-frmae stats.
+    // Uncomment to print per-frame stats.
     // init_flags_ = AVM_CODEC_USE_PER_FRAME_STATS;
   }
 

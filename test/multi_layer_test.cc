@@ -578,6 +578,7 @@ TEST_P(MultiLayerTest, MultiLayerTest2Embedded2TemporaSframe) {
   enable_explicit_ref_frame_map_ = false;
   enable_buffer_refresh_test_ = true;
   enable_s_frame_ = true;
+  cfg_.enable_sframe = 1;
   start_decoding_tl1_ = 11;
   ASSERT_NO_FATAL_FAILURE(RunLoop(&video_nonsc));
   EXPECT_EQ(num_mismatch_, 0);

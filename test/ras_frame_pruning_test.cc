@@ -327,6 +327,7 @@ class MultiLayer2TemporalDecodeBaseOnlyRASPruningTest
     cfg_.g_bit_depth = AVM_BITS_8;
     cfg_.enable_ops = 1;
     cfg_.enable_lcr = 1;
+    cfg_.enable_sframe = 1;
     cfg_.sframe_dist = 8;
     cfg_.sframe_mode = 0;
     cfg_.sframe_type = 1;
@@ -471,6 +472,7 @@ class MultiLayer3TemporalDecodeBaseOnlyRASPruningTest
     cfg_.g_bit_depth = AVM_BITS_8;
     cfg_.enable_ops = 1;
     cfg_.enable_lcr = 1;
+    cfg_.enable_sframe = 1;
     cfg_.sframe_dist = 16;
     cfg_.sframe_mode = 0;
     cfg_.sframe_type = 1;
@@ -613,6 +615,7 @@ class RandomAccessRASPruningTest
     cfg_.kf_min_dist = 65;
     cfg_.kf_max_dist = 65;
     cfg_.use_fixed_qp_offsets = 1;
+    cfg_.enable_sframe = 1;
     cfg_.sframe_dist = 4;
     cfg_.sframe_mode = 2;
     cfg_.sframe_type = 1;
@@ -746,6 +749,7 @@ class MultiLayerTest3Embedded3TemporalDropSL2RASPruningTest
     cfg_.g_bit_depth = AVM_BITS_8;
     cfg_.enable_ops = 1;
     cfg_.enable_lcr = 1;
+    cfg_.enable_sframe = 1;
     cfg_.sframe_dist = 48;
     cfg_.sframe_mode = 0;
     cfg_.sframe_type = 1;
@@ -935,6 +939,7 @@ class MultiLayerTest2Embedded2TempDropTL1RASPruningTest
     cfg_.g_bit_depth = AVM_BITS_8;
     cfg_.enable_ops = 1;
     cfg_.enable_lcr = 1;
+    cfg_.enable_sframe = 1;
     cfg_.sframe_dist = 16;
     cfg_.sframe_mode = 0;
     cfg_.sframe_type = 1;

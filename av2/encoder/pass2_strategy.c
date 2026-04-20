@@ -2847,9 +2847,10 @@ void av2_get_second_pass_params(AV2_COMP *cpi,
       }
       int sframe_dist = oxcf->kf_cfg.sframe_dist;
       int sframe_mode = oxcf->kf_cfg.sframe_mode;
+      int enable_sframe = oxcf->kf_cfg.enable_sframe;
       CurrentFrame *const current_frame = &cpi->common.current_frame;
       // ARF_UPDATE and KFFLT_UPDATE is set as S_FRAME in the RA case
-      if (sframe_dist) {
+      if (sframe_dist && enable_sframe) {
         if (sframe_mode == 0) {
           if (update_type == ARF_UPDATE || update_type == KFFLT_UPDATE) {
             cpi->is_ras_frame = (oxcf->kf_cfg.sframe_type == RAS_FRAME);
@@ -2946,9 +2947,10 @@ void av2_get_second_pass_params(AV2_COMP *cpi,
                                                  oxcf->gf_cfg.enable_auto_arf);
     const int sframe_dist = oxcf->kf_cfg.sframe_dist;
     const int sframe_mode = oxcf->kf_cfg.sframe_mode;
+    const int enable_sframe = oxcf->kf_cfg.enable_sframe;
     const int update_type = gf_group->update_type[gf_group->index];
     CurrentFrame *const current_frame = &cpi->common.current_frame;
-    if (sframe_dist != 0) {
+    if (sframe_dist && enable_sframe) {
       if (sframe_mode == 0 && oxcf->gf_cfg.lag_in_frames != 0) {
         if (update_type == ARF_UPDATE || update_type == KFFLT_UPDATE) {
           frame_params->frame_type = S_FRAME;
@@ -3052,7 +3054,8 @@ void av2_get_second_pass_params(AV2_COMP *cpi,
 
         // ARF_UPDATE and KFFLT_UPDATE is set as S_FRAME in the RA case
         if (frame_params->frame_type == INTER_FRAME &&
-            (oxcf->kf_cfg.sframe_dist > 0 && oxcf->kf_cfg.sframe_mode == 0))
+            (oxcf->kf_cfg.sframe_dist > 0 && oxcf->kf_cfg.sframe_mode == 0 &&
+             oxcf->kf_cfg.enable_sframe))
           frame_params->frame_type = S_FRAME;
       }
     }
