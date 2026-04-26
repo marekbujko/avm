@@ -912,6 +912,7 @@ static avm_codec_err_t decoder_decode(avm_codec_alg_priv_t *ctx,
       decrease_ref_count(pbi->output_frames[j], pool);
     }
     pbi->num_output_frames = 0;
+    ctx->last_show_frame = NULL;
     unlock_buffer_pool(pool);
     for (size_t j = 0; j < ctx->num_grain_image_frame_buffers; j++) {
       pool->release_fb_cb(pool->cb_priv, &ctx->grain_image_frame_buffers[j]);
