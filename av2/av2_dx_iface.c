@@ -710,9 +710,9 @@ static size_t check_frame_unit_data(struct AV2Decoder *pbi, const uint8_t *data,
         // OBU_METADATA_SHORT and OBU_METADATA_GROUP can be suffix (part of
         // picture unit) Read the metadata_is_suffix flag from the first bit of
         // the payload
-        if ((obu_header.type == OBU_METADATA_SHORT ||
-             obu_header.type == OBU_METADATA_GROUP) &&
-            payload_size > 0) {
+        if (obu_header.type == OBU_METADATA_SHORT ||
+            obu_header.type == OBU_METADATA_GROUP) {
+          if (payload_size < 1) return 0;
           uint8_t first_payload_byte = data_read[bytes_read];
           bool metadata_is_suffix = (first_payload_byte & 0x80) >> 7;
 
