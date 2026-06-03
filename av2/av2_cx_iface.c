@@ -3618,10 +3618,7 @@ static avm_codec_err_t ctrl_copy_reference(avm_codec_alg_priv_t *ctx,
     YV12_BUFFER_CONFIG sd;
 
     if (!(frame->img.fmt & AVM_IMG_FMT_HIGHBITDEPTH)) {
-      AV2_COMMON *cm = &ctx->cpi->common;
-      avm_internal_error(&cm->error, AVM_CODEC_INVALID_PARAM,
-                         "Incorrect buffer dimensions");
-      return cm->error.error_code;
+      ERROR("Incorrect buffer bitdepth");
     }
     image2yuvconfig(&frame->img, &sd);
     av2_copy_reference_enc(ctx->cpi, frame->idx, &sd);
@@ -3675,10 +3672,7 @@ static avm_codec_err_t ctrl_copy_new_frame_image(avm_codec_alg_priv_t *ctx,
       YV12_BUFFER_CONFIG sd;
 
       if (!(new_img->fmt & AVM_IMG_FMT_HIGHBITDEPTH)) {
-        AV2_COMMON *cm = &ctx->cpi->common;
-        avm_internal_error(&cm->error, AVM_CODEC_INVALID_PARAM,
-                           "Incorrect buffer dimensions");
-        return cm->error.error_code;
+        ERROR("Incorrect buffer bitdepth");
       }
       image2yuvconfig(new_img, &sd);
       return av2_copy_new_frame_enc(&ctx->cpi->common, &new_frame, &sd);
